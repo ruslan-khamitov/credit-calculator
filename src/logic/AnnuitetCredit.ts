@@ -5,9 +5,10 @@ export default class AnnuitetCredit extends Credit {
   constructor(
     interestRatePerYear: number,
     loanAmount: number,
-    loanTermInMonths: number
+    loanTermInMonths: number,
+    loanDate: Date
   ) {
-    super(interestRatePerYear, loanAmount, loanTermInMonths);
+    super(interestRatePerYear, loanAmount, loanTermInMonths, loanDate);
   }
 
   calculate() {
@@ -24,50 +25,33 @@ export default class AnnuitetCredit extends Credit {
     const now = new Date();
     let remainingAmount = this.loanAmount; // 10000
     const payments: CreditPayment[] = [{
-      date: now,
+      date: this.loanDate,
       interestPaymentAmount: 0,
       principalPaymentAmount: 0,
       remainingAmount,
       totalPaymentAmount: 0,
     }];
-    const monthlyInterestRate = this.getMonthlyInterestRate();
 
-    for (let i = 0; i < this.loanTermInMonths; i += 1) {
-      const interestPaymentAmount = remainingAmount * monthlyInterestRate;
+    for (let i = 0; i < this.loanTermInMonths; i++) {
+      const interestPaymentAmount = remainingAmount * this.monthlyInterestRate;
       const principalPaymentAmount = monthlyPayment - interestPaymentAmount;
+      remainingAmount -= principalPaymentAmount;
       const payment: CreditPayment = {
-        date: this.addMonths(now, i + 1),
+        date: this.getPaymentDate(i + 1),
         interestPaymentAmount,
         principalPaymentAmount,
         remainingAmount,
-        totalPaymentAmount: monthlyPayment,
+        totalPaymentAmount: Math.min(monthlyPayment, remainingAmount)
       };
-      remainingAmount -= principalPaymentAmount;
       payments.push(payment);
     }
     return payments
   }
 
-  private addMonths(_date: Date, months: number) {
-    const date = new Date(_date);
-    const d = date.getDate();
-    date.setMonth(date.getMonth() + months);
-    if (date.getDate() !== d) {
-      date.setDate(d);
-    }
-    return date;
-  }
-
   private getMonthlyPaymentAmount() {
-    const monthlyInterestRate = this.getMonthlyInterestRate();
-    const coef = (1 + monthlyInterestRate) ** this.loanTermInMonths;
+    const coef = (1 + this.monthlyInterestRate) ** this.loanTermInMonths;
     return Math.round(
-      this.loanAmount * (monthlyInterestRate + (monthlyInterestRate/(coef - 1)))
+      this.loanAmount * (this.monthlyInterestRate + (this.monthlyInterestRate/(coef - 1)))
     );
   }
-
-  private getMonthlyInterestRate() {
-    return this.interestRatePerYear / 100 / 12;
-  }
-
 }
