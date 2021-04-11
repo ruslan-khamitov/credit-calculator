@@ -1,6 +1,12 @@
 <template>
   <div class="credit-payments__result" v-if="payments != null">
     <h4>
+      Сумма кредита: {{ payments.loanAmount }}
+    </h4>
+    <h4>
+      Всего выплат: {{ payments.totalAmount.toFixed(2) }}
+    </h4>
+    <h4>
       Переплата по процентам за кредит: {{ payments.totalInterestPaymentAmount.toFixed(2) }}
     </h4>
     <table class="credit-payments__table">

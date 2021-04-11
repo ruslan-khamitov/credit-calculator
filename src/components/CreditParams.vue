@@ -69,18 +69,23 @@ export default defineComponent({
   },
   methods: {
     calculate() {
+      const { loanAmount, } = this;
       const CreditClass = this.creditType === 'anuitet'
         ? AnnuitetCredit
         : DifferentialCredit;
       const credit = new CreditClass(
         this.loanInterestRate,
-        this.loanAmount,
+        loanAmount,
         this.getMonths,
         new Date(),
       );
 
       const payments = credit.calculate();
-      this.$emit('update-payments', payments)
+      this.$emit('update-payments', {
+        loanAmount: this.loanAmount,
+        totalAmount: this.loanAmount + payments.totalInterestPaymentAmount,
+        ...payments
+      })
     }
   }
 })
