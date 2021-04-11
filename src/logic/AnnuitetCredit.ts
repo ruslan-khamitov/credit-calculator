@@ -22,7 +22,6 @@ export default class AnnuitetCredit extends Credit {
   }
 
   private getPayments(monthlyPayment: number): CreditPayment[] {
-    const now = new Date();
     let remainingAmount = this.loanAmount; // 10000
     const payments: CreditPayment[] = [{
       date: this.loanDate,
@@ -40,8 +39,8 @@ export default class AnnuitetCredit extends Credit {
         date: this.getPaymentDate(i + 1),
         interestPaymentAmount,
         principalPaymentAmount,
-        remainingAmount,
-        totalPaymentAmount: Math.min(monthlyPayment, remainingAmount)
+        remainingAmount: remainingAmount,
+        totalPaymentAmount: monthlyPayment
       };
       payments.push(payment);
     }
@@ -50,8 +49,6 @@ export default class AnnuitetCredit extends Credit {
 
   private getMonthlyPaymentAmount() {
     const coef = (1 + this.monthlyInterestRate) ** this.loanTermInMonths;
-    return Math.round(
-      this.loanAmount * (this.monthlyInterestRate + (this.monthlyInterestRate/(coef - 1)))
-    );
+    return this.loanAmount * (this.monthlyInterestRate + (this.monthlyInterestRate / (coef - 1)))
   }
 }

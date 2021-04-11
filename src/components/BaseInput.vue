@@ -6,7 +6,7 @@
       :id="id"
       :value="modelValue"
       v-bind="$attrs"
-      @input="$emit('update:modelValue', $event.target.value)"
+      @input="input"
     >
   </div>
 </template>
@@ -36,6 +36,14 @@ export default defineComponent({
     modelValue: {
       type: [String, Number],
       default: '',
+    }
+  },
+  methods: {
+    input(e: InputEvent) {
+      const value = this.type === "number"
+        ? parseFloat(e.target.value)
+        : e.target.value;
+      this.$emit('update:modelValue', value);
     }
   }
 })

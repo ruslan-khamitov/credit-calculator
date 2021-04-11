@@ -32,7 +32,10 @@
         <option value="months">Месяцев</option>
       </select>
     </div>
-    <button class="credit-params__calculate-button">
+    <button
+      class="credit-params__calculate-button"
+      @click="calculate"
+    >
       Расчитать
     </button>
   </section>
@@ -40,6 +43,8 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import AnnuitetCredit from '../logic/AnnuitetCredit';
+import DifferentialCredit from '../logic/DifferentialCredit';
 import BaseInput from './BaseInput.vue';
 
 export default defineComponent({
@@ -49,13 +54,35 @@ export default defineComponent({
   },
   data() {
     return {
-      loanAmount: 0,
+      loanAmount: 100000,
       loanInterestRate: 10,
       termType: "months",
       loanTerm: 6,
       creditType: 'anuitet'
     }
   },
+  computed: {
+    getMonths() {
+      if (this.termType === "months") return this.loanTerm;
+      return this.loanTerm * 12;
+    }
+  },
+  methods: {
+    calculate() {
+      const CreditClass = this.creditType === 'anuitet'
+        ? AnnuitetCredit
+        : DifferentialCredit;
+      const credit = new CreditClass(
+        this.loanInterestRate,
+        this.loanAmount,
+        this.getMonths,
+        new Date(),
+      );
+
+      const payments = credit.calculate();
+      this.$emit('update-payments', payments)
+    }
+  }
 })
 </script>
 

@@ -1,15 +1,34 @@
 <template>
-  <credit-params class="credit-params" />
+  <credit-params
+    class="credit-params"
+    @update-payments="setPayments"
+  />
+  <credit-payments
+    :payments="payments"
+  />
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
 import CreditParams from './components/CreditParams.vue'
+import CreditPayments from './components/CreditPayments.vue';
+import { CreditPayment } from './logic/CreditPayment';
 
 export default defineComponent({
   name: 'App',
   components: {
-    CreditParams
+    CreditParams,
+    CreditPayments
+  },
+  data() {
+    return {
+      payments: null,
+    }
+  },
+  methods: {
+    setPayments(payments: CreditPayment) {
+      this.payments = payments;
+    }
   }
 })
 </script>
