@@ -96,7 +96,7 @@ export default defineComponent({
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background-color: hsla(210, 50%, 95%);
+  background-color: #E3F2FD;
   padding: 0.5em 1em;
 }
 
@@ -127,7 +127,7 @@ export default defineComponent({
 }
 
 :is(select) {
-  height: 2em;
+  height: 32px;
   width: 100%;
 }
 

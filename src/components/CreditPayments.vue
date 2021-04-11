@@ -80,7 +80,14 @@ export default defineComponent({
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  margin: 0.5em;
+  margin: .5em;
+}
+
+
+@media screen and (max-width: 991px) {
+  .credit-payments__result {
+    align-items: stretch;
+  }
 }
 
 .credit-payments__table {

@@ -68,6 +68,9 @@ body {
   #app {
     grid-template-columns: 1fr;
     grid-template-rows: 300px 1fr;
+    max-height: unset;
+    height: 100%;
+    width: 100%;
   }
 }
 </style>
