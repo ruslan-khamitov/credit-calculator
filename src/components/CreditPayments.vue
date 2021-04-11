@@ -24,7 +24,7 @@
           <td class="right-align">{{ Math.abs(payment.remainingAmount.toFixed(2)) }}</td>
           <td class="right-align">{{ payment.interestPaymentAmount.toFixed(2) }}</td>
           <td class="right-align">{{ payment.principalPaymentAmount.toFixed(2) }}</td>
-          <td class="right-align">{{ payment.totalPaymentAmount.toFixed(2) }}</td>
+          <td class="right-align">{{ Math.abs(payment.totalPaymentAmount).toFixed(2) }}</td>
         </tr>
       </tbody>
     </table>

@@ -49,7 +49,7 @@ export default class DifferentialCredit extends Credit {
   }
 
   private getPrincipalPaymentAmount() {
-    return Math.round(this.loanAmount/this.loanTermInMonths);
+    return this.loanAmount/this.loanTermInMonths;
   }
 
   private getInterestPaymentAmount(remainingAmount: number) {
