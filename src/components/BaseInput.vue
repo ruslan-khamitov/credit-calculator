@@ -1,18 +1,5 @@
-<template>
-  <div class="base-input">
-    <label v-if="label != null" :for="id">{{ label }}</label>
-    <input
-      :type="type"
-      :id="id"
-      :value="modelValue"
-      v-bind="$attrs"
-      @input="input"
-    >
-  </div>
-</template>
-
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent, h } from 'vue'
 
 export default defineComponent({
   name: 'BaseInput',
@@ -21,15 +8,7 @@ export default defineComponent({
       type: String,
       required: true,
     },
-    type: {
-      type: String,
-      default: 'text',
-    },
     label: {
-      type: String,
-      default: '',
-    },
-    placeholder: {
       type: String,
       default: '',
     },
@@ -39,12 +18,24 @@ export default defineComponent({
     }
   },
   methods: {
-    input(e: InputEvent) {
-      const value = this.type === "number"
-        ? parseFloat(e.target.value)
-        : e.target.value;
-      this.$emit('update:modelValue', value);
+    input(e: Event): void {
+      this.$emit('update:modelValue', (e.target as HTMLInputElement).value);
     }
+  },
+  render() {
+    return h('div', {
+      class: 'base-input'
+    }, [
+      this.label != null
+        ? h('label', { for: this.id }, this.label)
+        : null,
+      h('input', {
+        ...this.$attrs,
+        id: this.id,
+        value: this.modelValue,
+        onInput: this.input,
+      })
+    ])
   }
 })
 </script>

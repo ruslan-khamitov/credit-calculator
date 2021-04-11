@@ -27,7 +27,7 @@
         >
           <td>{{ index + 1 }}</td>
           <td>{{ getDate(payment.date) }}</td>
-          <td class="right-align">{{ Math.abs(payment.remainingAmount.toFixed(2)) }}</td>
+          <td class="right-align">{{ Math.abs(payment.remainingAmount).toFixed(2) }}</td>
           <td class="right-align">{{ payment.interestPaymentAmount.toFixed(2) }}</td>
           <td class="right-align">{{ payment.principalPaymentAmount.toFixed(2) }}</td>
           <td class="right-align">{{ Math.abs(payment.totalPaymentAmount).toFixed(2) }}</td>
@@ -44,20 +44,24 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, PropType } from 'vue';
+import CalculatedCreditPayment from '../logic/CreditPayment';
+
+export interface Payment extends CalculatedCreditPayment {
+  loanAmount: number;
+  totalAmount: number;
+}
 
 export default defineComponent({
   name: 'CreditPayments',
   props: {
     payments: {
-      type: Array,
-      default() {
-        return [];
-      }
+      type: Object as PropType<Payment | null>,
+      required: false,
     }
   },
   methods: {
-    getDate(date: Date) {
+    getDate(date: Date): string {
       const withZero = (num: number) => num < 10 ? `0${num}` : num;
       const year = date.getFullYear();
       const month = withZero(date.getMonth() + 1);

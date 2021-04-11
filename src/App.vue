@@ -11,8 +11,12 @@
 <script lang="ts">
 import { defineComponent } from 'vue'
 import CreditParams from './components/CreditParams.vue'
-import CreditPayments from './components/CreditPayments.vue';
+import CreditPayments, { Payment } from './components/CreditPayments.vue';
 import { CreditPayment } from './logic/CreditPayment';
+
+interface AppData {
+  payments: Payment | null
+}
 
 export default defineComponent({
   name: 'App',
@@ -20,13 +24,13 @@ export default defineComponent({
     CreditParams,
     CreditPayments
   },
-  data() {
+  data(): AppData {
     return {
       payments: null,
     }
   },
   methods: {
-    setPayments(payments: CreditPayment) {
+    setPayments(payments: Payment): void {
       this.payments = payments;
     }
   }

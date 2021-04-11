@@ -11,13 +11,13 @@
       label="Сумма кредита (руб)"
       type="number"
       id="loanAmount"
-      v-model="loanAmount"
+      v-model.number="loanAmount"
     />
     <base-input
       label="Процентная ставка, % годовых"
       type="number"
       id="loanInterestRate"
-      v-model="loanInterestRate"
+      v-model.number="loanInterestRate"
       step="0.1"
     />
     <div class="credit-params__term">
@@ -25,7 +25,7 @@
         label="Срок займа"
         type="number"
         id="loanAmount"
-        v-model="loanTerm"
+        v-model.number="loanTerm"
       />
       <select v-model="termType">
         <option value="years">Лет</option>
@@ -62,14 +62,14 @@ export default defineComponent({
     }
   },
   computed: {
-    getMonths() {
+    getMonths(): number {
       if (this.termType === "months") return this.loanTerm;
       return this.loanTerm * 12;
     }
   },
   methods: {
-    calculate() {
-      const { loanAmount, } = this;
+    calculate(): void {
+      const { loanAmount } = this;
       const CreditClass = this.creditType === 'anuitet'
         ? AnnuitetCredit
         : DifferentialCredit;
