@@ -56,12 +56,13 @@ export default defineComponent({
   justify-content: flex-start;
   align-items: flex-start;
   height: 50px;
-  width: 100%;
+  max-width: 100%;
   margin: 0.5em 0;
 }
 
 .base-input input {
-  height: 25px;
+  height: 3em;
   width: 100%;
+  box-sizing: border-box;
 }
 </style>

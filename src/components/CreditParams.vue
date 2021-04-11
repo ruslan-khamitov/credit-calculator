@@ -98,14 +98,14 @@ export default defineComponent({
 .credit-params__term {
   display: grid;
   grid-template-rows: 1fr;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr 1fr;
   column-gap: 1em;
   align-items: center;
 }
 
 .credit-params__term select  {
-  height: 2em;
   align-self: flex-end;
+  justify-self: flex-end;
   margin-bottom: 0.5em;
   font-size: 0.9em;
 }
@@ -117,13 +117,17 @@ export default defineComponent({
   width: 100%;
 }
 
-.credit-params :is(select) {
-  height: 25px;
+.credit-params__type label {
+  text-align: left;
+}
+
+:is(select) {
+  height: 2em;
   width: 100%;
 }
 
-.credit-params__type :is(label, select, option) {
-  font-size: 0.8;
+:is(label, select, option) {
+  font-size: 0.8em;
 }
 
 .credit-params__calculate-button {

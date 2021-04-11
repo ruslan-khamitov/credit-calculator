@@ -1,5 +1,5 @@
 <template>
-  <div v-if="payments != null">
+  <div class="credit-payments__result" v-if="payments != null">
     <h4>
       Переплата по процентам за кредит: {{ payments.totalInterestPaymentAmount.toFixed(2) }}
     </h4>
@@ -29,8 +29,11 @@
       </tbody>
     </table>
   </div>
-  <div v-else>
-    Настройте креди
+  <div
+    v-else
+    class="credit-payments__filler"
+  >
+    Настройте кредит
   </div>
 </template>
 
@@ -61,6 +64,15 @@ export default defineComponent({
 
 
 <style>
+.credit-payments__result {
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  margin: 0.5em;
+}
+
 .credit-payments__table {
   border-collapse: collapse;
 }
@@ -70,7 +82,18 @@ export default defineComponent({
   padding: 0.5em;
 }
 
+tr:hover {
+  background-color: #f5f5f5;
+}
+
 .right-align {
   text-align: right;
 }
+
+.credit-payments__filler {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 </style>
