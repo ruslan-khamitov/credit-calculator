@@ -38,7 +38,8 @@ export default class DifferentialCredit extends Credit {
         principalPaymentAmount,
         remainingAmount,
         totalPaymentAmount: Math.min(monthlyPayment, remainingAmount)
-      })
+      });
+      totalInterestPaymentAmount += interestPaymentAmount;
     }
 
 
