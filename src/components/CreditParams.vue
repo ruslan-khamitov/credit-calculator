@@ -95,47 +95,48 @@ export default defineComponent({
   },
   watch: {
     loanAmount(val, prevVal) {
-      if (typeof val === 'string') {
-        this.$nextTick(() => {
+      this.$nextTick(() => {
+        if (typeof val === 'string') {
           this.loanAmount = prevVal;
-        })
-        return;
-      }
-      if (val < 0) {
-        this.$nextTick(() => {
+          return;
+        }
+        if (val < 0) {
           this.loanAmount = 0;
-        });
-      }
+        }
+      })
     },
     loanInterestRate(val, prevVal) {
-      if (typeof val === 'string') {
-        this.$nextTick(() => {
+      this.$nextTick(() => {
+        if (typeof val === 'string') {
           this.loanInterestRate = prevVal;
-        })
-        return;
-      }
-      if (val < 0) {
-        this.$nextTick(() => {
+          return;
+        }
+        if (val < 0) {
           this.loanInterestRate = 0
-        });
-      } else if (val > 100) {
-        this.$nextTick(() => {
-          this.loanInterestRate = Math.min(100, val);
-        });
-      }
+        } else if (val > 100) {
+          this.loanInterestRate = 100;
+        }
+      })
     },
     loanTerm(val, prevVal) {
-      if (typeof val === 'string') {
-        this.$nextTick(() => {
+      this.$nextTick(() => {
+        if (typeof val === 'string') {
           this.loanTerm = prevVal;
-        })
-        return;
-      }
-      if (val < 0) {
-        this.$nextTick(() => {
+          return;
+        }
+        if (val < 0) {
           this.loanTerm = 0;
-        })
-      }
+        }
+        if (this.termType === "months") {
+          if (val > 600) {
+            this.loanTerm = 600;
+          }
+        } else {
+          if (val > 50) {
+            this.loanTerm = 50;
+          }
+        }
+      });
     }
   }
 })
