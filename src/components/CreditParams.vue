@@ -12,6 +12,7 @@
       type="number"
       id="loanAmount"
       min="0"
+      pattern="\d*"
       v-model.number="loanAmount"
     />
     <base-input
@@ -90,6 +91,33 @@ export default defineComponent({
         totalAmount: this.loanAmount + payments.totalInterestPaymentAmount,
         ...payments
       })
+    }
+  },
+  watch: {
+    loanAmount(val) {
+      if (val < 0) {
+        this.$nextTick(() => {
+          this.loanAmount = 0;
+        });
+      }
+    },
+    loanInterestRate(val) {
+      if (val < 0) {
+        this.$nextTick(() => {
+          this.loanInterestRate = 0
+        });
+      } else if (val > 100) {
+        this.$nextTick(() => {
+          this.loanInterestRate = Math.min(100, val);
+        });
+      }
+    },
+    loanTerm(val) {
+      if (val < 0) {
+        this.$nextTick(() => {
+          this.loanTerm = 0;
+        })
+      }
     }
   }
 })
