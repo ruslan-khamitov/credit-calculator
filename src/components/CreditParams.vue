@@ -94,14 +94,26 @@ export default defineComponent({
     }
   },
   watch: {
-    loanAmount(val) {
+    loanAmount(val, prevVal) {
+      if (typeof val === 'string') {
+        this.$nextTick(() => {
+          this.loanAmount = prevVal;
+        })
+        return;
+      }
       if (val < 0) {
         this.$nextTick(() => {
           this.loanAmount = 0;
         });
       }
     },
-    loanInterestRate(val) {
+    loanInterestRate(val, prevVal) {
+      if (typeof val === 'string') {
+        this.$nextTick(() => {
+          this.loanInterestRate = prevVal;
+        })
+        return;
+      }
       if (val < 0) {
         this.$nextTick(() => {
           this.loanInterestRate = 0
@@ -112,7 +124,13 @@ export default defineComponent({
         });
       }
     },
-    loanTerm(val) {
+    loanTerm(val, prevVal) {
+      if (typeof val === 'string') {
+        this.$nextTick(() => {
+          this.loanTerm = prevVal;
+        })
+        return;
+      }
       if (val < 0) {
         this.$nextTick(() => {
           this.loanTerm = 0;
