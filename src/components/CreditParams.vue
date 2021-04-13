@@ -11,6 +11,7 @@
       label="Сумма кредита (руб)"
       type="number"
       id="loanAmount"
+      min="0"
       v-model.number="loanAmount"
     />
     <base-input
@@ -19,6 +20,8 @@
       id="loanInterestRate"
       v-model.number="loanInterestRate"
       step="0.1"
+      min="0"
+      max="100"
     />
     <div class="credit-params__term">
       <base-input
@@ -26,6 +29,7 @@
         type="number"
         id="loanAmount"
         v-model.number="loanTerm"
+        min="0"
       />
       <select v-model="termType">
         <option value="years">Лет</option>
