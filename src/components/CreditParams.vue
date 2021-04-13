@@ -124,8 +124,8 @@ export default defineComponent({
           this.loanTerm = prevVal;
           return;
         }
-        if (val < 0) {
-          this.loanTerm = 0;
+        if (val < 1) {
+          this.loanTerm = 1;
         }
         if (this.termType === "months") {
           if (val > 600) {
